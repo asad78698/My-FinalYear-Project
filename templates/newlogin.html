@@ -21,10 +21,6 @@
         <strong>Error!</strong> All Fields Are Required.
     </div>
 
-    <div class="alertSuccess" style="display: block; background-color: rgb(139, 235, 139); padding: 18px;">
-        <strong>Congrats!</strong> Your Account is Created You Can Login Now.
-    </div>
-
     {% if error %}
     <div class="alert">
         <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
@@ -60,16 +56,6 @@
                 return false;
             }
         }
-
-        function showingSuccessMessage() {
-            const alertMessage = document.querySelector('.alertSuccess');
-            const intervalId = setInterval(() => {
-                alertMessage.style.display = 'none';
-                clearInterval(intervalId);
-            }, 3000);
-        }
-
-        showingSuccessMessage();
 
         
     </script>

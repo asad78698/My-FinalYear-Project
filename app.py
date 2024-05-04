@@ -15,7 +15,9 @@ db = client['fyp']
 userCollection = db['users']
 
 app = Flask(__name__)
-app.secret_key = '12345'
+app.secret_key = '589714'
+
+nouser = 'Account Does Not Exist'
 
 @app.route('/')
 
@@ -65,16 +67,17 @@ def signup():
 
 @app.route('/forgotpassword', methods=['GET', 'POST'])
 def forgotpassword():
+    global nouser
     if request.method == 'POST':
         email = request.form['email']
-        password = request.form['password']
-        confirmpassword = request.form['confirmpassword']
-        user = userCollection.find_one({'email': email})
+        oldpassword = request.form['oldpassword']
+        newpassword = request.form['newpassword']
+        user = userCollection.find_one({'email': email, 'password': oldpassword})
         if user:
-            userCollection.update_one({'email': email}, {'$set': {'password': password, 'confirm': confirmpassword}})
+            userCollection.update_one({'email': email}, {'$set': {'password': newpassword, 'confirm': newpassword}})
             return redirect(url_for('loginpage'))
         else:
-            return "Email Not Found"
+            return render_template('restpassword.html', error = nouser)
     
     return render_template('restpassword.html')
             
