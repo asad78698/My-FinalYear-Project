@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Register</title>
+    <link rel="stylesheet" href="/static/css/newregister.css">
+</head>
+
+<body>
+
+    <!-- Topbar -->
+    <nav class="navbartop">
+        <img class="imagetop" src="/static/images/logo.png" alt="">
+        <hr>
+    </nav>
+    <div class="alert" style="display: none;">
+        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+        <strong style="background-color: transparent;"></strong>
+    </div>
+
+    <!-- Register Section-->
+    <section class="mainbox">
+        <!-- Register Image Section-->
+        <div class="imagebox">
+            <div class="textstyle">
+                <h2>Register Your Account</h2>
+                <p>Create Your Account And Get Access To Security Tools</p>
+            </div>
+            <img src="/static/images/newregisterimage.png" alt="">
+        </div>
+
+        <!-- Register Form Section-->
+        <div class="formbox">
+            <form id="registerForm" action="/signuppage" method="POST" onsubmit="return formValidation(event)">
+                <h2>Fill Your Details</h2>
+                <input type="text" name="username" id="username" placeholder="Username">
+                <input type="email" name="email" id="email" placeholder="Email">
+                <input type="password" name="password" id="password" placeholder="Password">
+                <input type="password" name="confirm" id="confirm" placeholder="Confirm Password">
+                <button>Register</button>
+                <hr>
+                <p>Already Have An Account? <a href="{{url_for('loginpage')}}">Login</a></p>
+            </form>
+        </div>
+    </section>
+
+    <script>
+        const formValidation = () => {
+
+            const username = document.getElementById('username').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value.trim();
+            const confirmPassword = document.getElementById('confirm').value.trim();
+            const alertMessage = document.querySelector('.alert');
+
+            if (username === '' || email === '' || password === '' || confirmPassword === '') {
+                alertMessage.innerHTML = '<span class="closebtn" onclick="this.parentElement.style.display=\'none\';">&times;</span> All fields are required';
+                alertMessage.style.display = 'block';
+                return false;
+            }
+
+            if (username.length < 6) {
+                alertMessage.innerHTML = '<span class="closebtn" onclick="this.parentElement.style.display=\'none\';">&times;</span> Username must be at least 6 characters';
+                alertMessage.style.display = 'block';
+                return false;
+            }
+
+            const emailRegex = /^[a-zA-Z0-9._%+-]+@(gmail|outlook)\.(com|org|net)$/i;
+
+            if (!emailRegex.test(email)) {
+                alertMessage.innerHTML = '<span class="closebtn" onclick="this.parentElement.style.display=\'none\';">&times;</span> Invalid email address';
+                alertMessage.style.display = 'block';
+                return false;
+            }
+
+            if (password !== confirmPassword) {
+                alertMessage.innerHTML = '<span class="closebtn" onclick="this.parentElement.style.display=\'none\';">&times;</span> Passwords do not match';
+                alertMessage.style.display = 'block';
+                return false;
+            }
+
+
+            return true;
+        }
+    </script>
+
+</body>
+
+</html>

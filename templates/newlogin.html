@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <link rel="stylesheet" href="/static/css/newlogin.css">
+</head>
+
+<body>
+    <!-- Topbar -->
+
+    <nav class="navbartop">
+        <img class="imagetop" src="/static/images/logo.png" alt="">
+        <hr>
+    </nav>
+
+    <div class="alert" style="display: none;">
+        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+        <strong>Error!</strong> All Fields Are Required.
+    </div>
+
+    <div class="alertSuccess" style="display: block; background-color: rgb(139, 235, 139); padding: 18px;">
+        <strong>Congrats!</strong> Your Account is Created You Can Login Now.
+    </div>
+
+    {% if error %}
+    <div class="alert">
+        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+        <strong>Error!</strong> {{ error }}
+    </div>
+    {% endif %}
+
+    <!-- Login Form -->
+
+    <div class="loginbox">
+        <div class="logintext">
+            <h1>Login</h1>
+            <p>Hi, Welcome Back!</p>
+        </div>
+        <form class="loginform" action="/loginpage" method="POST" onsubmit="return formValidation() ">
+            <input id="username" type="text" name="username" placeholder="Enter Username">
+            <input id="password" type="password" name="password" placeholder="Enter Password">
+            <button>Login</button>
+            <hr>
+            <a href="{{url_for('signup')}}">Don't have an account?</a>
+            <a href="{{url_for('forgotpassword')}}">Reset Your Password</a>
+        </form>
+    </div>
+
+    <script>
+        const formValidation = () => {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const alertMessage = document.querySelector('.alert');
+
+            if (username === '' || password === '') {
+                alertMessage.style.display = 'block';
+                return false;
+            }
+        }
+
+        function showingSuccessMessage() {
+            const alertMessage = document.querySelector('.alertSuccess');
+            const intervalId = setInterval(() => {
+                alertMessage.style.display = 'none';
+                clearInterval(intervalId);
+            }, 3000);
+        }
+
+        showingSuccessMessage();
+
+        
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,178 @@
+.navbartop{
+    overflow: hidden;
+    top: 0;
+    width: 100%;
+    height: auto;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+}
+
+.imagetop{
+    width: 45px;
+    height: 45px;
+    padding: 4px;
+    margin: 6px;
+    margin-left: 20px;
+}
+
+.navbartop hr{
+    margin: 0px;
+    padding: 0px;
+    border: 0px;
+    border-top: 1px solid #cec9c9;
+}
+
+*{
+    background-color: #F1F2F5;
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+}
+
+.mainbox{
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.imagebox{
+    display: block;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    display: block;
+    margin-top: 5rem;
+    margin-right: 4rem;
+}
+
+.imagebox img{
+    width: 450px;
+    height: 450px;
+    border-radius: 50%;
+    margin-top: -8px;
+    padding: 0;
+}
+
+.textstyle{
+  text-align: start;
+  margin: 0;
+  padding: 0;
+}
+
+
+.textstyle h2{
+    font-size: 26px;
+    margin-bottom: 8px;
+    line-height: 1.2;
+}
+
+.textstyle p{
+    font-size: 16px;
+    margin-bottom: 8px;
+    line-height: 1.2;
+}
+
+
+.formbox form{
+    height: auto;   
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 10px;
+}
+
+.formbox h2{
+    font-size: 26px;
+    margin-bottom: 16px;
+    line-height: 1.2;
+}
+
+.formbox input{
+    width: 300px;
+    height: 25px;
+    margin: 10px 0;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.formbox input:focus{
+    border: 1px solid black;
+}
+
+.formbox hr{
+    width: 300px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+}
+
+.formbox button{
+    width: 300px;
+    height: 40px;
+    margin: 10px 0;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+    font-size: 15px;
+    background-color: black ;
+    color: white;
+    cursor: pointer;
+}
+
+@media only screen and (max-device-width: 860px){
+    .imagebox{
+        display: none;
+    }
+    .formbox {
+        margin-top: 6rem;
+    }
+
+    .formbox input{
+        width: auto;
+        height: auto;
+    }
+
+    .formbox form{
+        height: auto;  
+        width: auto;
+        padding: 10px 10px;
+    }
+    .formbox button{
+        width: auto;
+    }
+}
+
+
+.alert {
+    padding: 20px;
+    background-color: #f44336; 
+    color: white;
+    margin-bottom: 15px;
+  }
+  
+
+  .closebtn {
+    margin-left: 15px;
+    color: black;
+    font-weight: bold;
+    float: right;
+    font-size: 22px;
+    line-height: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+    background-color: transparent;
+  }
+  
+
+  .closebtn:hover {
+    color: black;
+  }

@@ -1,0 +1,180 @@
+body{
+    background-color: #F1F2F5;
+    margin: 0;
+}
+
+.navbartop{
+    overflow: hidden;
+    top: 0;
+    width: 100%;
+    height: auto;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+}
+
+.imagetop{
+    width: 45px;
+    height: 45px;
+    padding: 4px;
+    margin: 6px;
+    margin-left: 20px;
+}
+
+.navbartop hr{
+    margin: 0px;
+    padding: 0px;
+    border: 0px;
+    border-top: 1px solid #cec9c9;
+}
+
+.loginbox{
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+    background: #ffffff;
+    width: 500px;
+    height: 400px;
+    color: #000000;
+    top: 50%;
+    left: 50%;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    box-sizing: border-box;
+    padding: 70px 30px;
+    border-radius: 10px;
+    ;
+
+}
+
+.logintext{
+
+    position: relative;
+    font-family: Arial, Helvetica, sans-serif;
+    bottom: 12%;
+}
+
+.logintext h1{
+    margin: 0;
+    padding: 0;
+    padding: 8px;
+    text-align: center;
+    font-size: 30px;
+    
+}
+
+.logintext p{
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    
+}
+
+.loginform{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    position: relative;
+    bottom: 10%;
+
+}
+
+.loginform input{
+    width: 300px;
+    height: 30px;
+    border: 1px solid #d1cccc;
+    margin: 10px;
+    overflow: hidden;
+    padding: 5px;
+    border-radius: 6px;
+}
+
+.loginform button{
+    width: 300px;
+    height: 40px;
+    border-radius: 6px;
+    margin-top: 6px;
+    margin-bottom: 6px;
+    outline: none;
+    border: none;
+    background-color: black;
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+
+}
+
+.loginform a{
+    text-decoration: none;
+    font-size: 15px;
+    margin-top: 10px;
+}
+
+.loginform hr {
+    width: 280px;
+    margin-bottom: 4px;
+    border-top: 1px solid #cec9c9;
+}
+
+@media only screen and (max-width: 576px) {
+    .loginbox{
+        width: 300px;
+        height: 400px;
+    }
+
+    .loginform input{
+        width: 200px;
+    }
+
+    .loginform button{
+        width: 200px;
+    }
+
+    .loginform hr {
+        width: 180px;
+        
+    }
+
+}
+
+@media screen and (min-width: 768px){
+    .loginbox{
+        width: 400px;
+        height: 400px;
+    }
+
+    .loginform input{
+        width: 300px;
+    }
+
+    .loginform button{
+        width: 300px;
+    }
+
+    .loginform hr {
+        width: 280px;
+        
+    }
+    
+}
+
+
+
+.alert {
+    padding: 20px;
+    background-color: #f44336;
+    color: white;
+  }
+  
+  .closebtn {
+    margin-left: 15px;
+    color: white;
+    font-weight: bold;
+    float: right;
+    font-size: 22px;
+    line-height: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  
+  .closebtn:hover {
+    color: black;
+  }
