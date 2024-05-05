@@ -107,9 +107,11 @@
         <form class="userprofile" action="/logout">
             <img src="{{ url_for('static', filename='/images/userlogo.png') }}" alt="">
             <h3>Hi, {{username}}</h3>
-            <button name="logout", type="submit">Logout</button>
+            <button  name="logout", type="submit">Logout</button>
+            <a style="text-decoration: none;" href="{{url_for('profile')}}"> <div class="new"  style="padding: 4.5px; margin-top: 6px;">Settings</div></a>
+
         </form>
-       
+        
         <div id="loading">
             <div class="loading-line"></div>
         </div>

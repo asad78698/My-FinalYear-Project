@@ -52,9 +52,15 @@
         <div class="text-light text-capitalize p-5 ">
             <h1 id="animated-text" class="text-font">Web Security Scanner</h1>
             <p class="heading-text">Scan Your Website To Find Malware and Protect The Website</p>
+            {% if session.get('loggedin') %}
+            <a href="{{ url_for('sql') }}">
+                <button class="btn-scan">Scan Now</button>
+            </a>
+            {% else %}
             <a href="{{ url_for('loginpage') }}">
                 <button class="btn-scan">Scan Now</button>
             </a>
+            {% endif %}
             <a href="{{ url_for('loginpage') }}">
                 <button class="btn-scan">How It Works?</button>
             </a>
