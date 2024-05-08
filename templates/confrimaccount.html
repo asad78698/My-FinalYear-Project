@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirm Account</title>
+<style>
+        body {
+            background-color: #f2f2f2;
+            font-family: Arial, sans-serif;
+
+        }
+    
+        .card {
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            margin: 15%  auto;
+            padding: 20px;
+            text-align: center;
+        }
+    
+        h2 {
+            color: #333;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+    
+        p {
+            color: #666;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    
+    <div class="card">
+    <h2><strong style="color: green;">Congrats</strong> Account Created</h2>
+    <p>Redirecting to login page in <span id="time">4</span></p>
+</body>
+
+<script>
+    const time = document.getElementById('time');
+    let count = 3;
+    const countdown = setInterval(() => {
+        time.innerHTML = count;
+        count--;
+        if (count < 0) {
+            clearInterval(countdown);
+            window.location.href = 'loginpage';
+        }
+    }, 1000); 
+</script>
+</html>

@@ -52,13 +52,14 @@ def logout():
 
 @app.route('/signuppage', methods=['GET', 'POST'])
 def signup():
+    alreadyEmail = 'Email already exists'
     if request.method == 'POST':
         username = request.form['username']
         email = request.form['email']
         password = request.form['password']
         confirm = request.form['confirm']
         if userCollection.find_one({'email': email}):  # Check if email already exists
-            return 'Email already exists'
+            return alreadyEmail
         else:
          userCollection.insert_one({
             'username': username,
@@ -67,7 +68,7 @@ def signup():
             'confirm': confirm,
             'url': []
         })
-        return redirect(url_for('loginpage'))
+        return redirect(url_for('confirmaccount'))
 
     return render_template('newregister.html')
 
@@ -96,6 +97,10 @@ def profile():
         return render_template('profile.html', username=session['username'], email=user_data['email'], urls=urls)
     else:
         return redirect(url_for('loginpage'))
+
+@app.route('/confirmaccount')
+def confirmaccount():
+    return render_template('confrimaccount.html')
 
 
 @app.route('/sqlinjection')
