@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <title>User Guide</title>
+</head>
+
+<body>
+    <section class="Hero">
+
+        <div class="maintext">
+            <h1 style="font-size: 120px;">User Guide</h1>
+            <p style="font-size: 20px;">Learn How To Use Web Security Tool In <strong>3 </strong>Steps</p>
+
+            <div class="buttons">
+                <a href="{{url_for('loginpage')}}"> <button>Login Here</button></a>
+                <a href="{{url_for('index')}}"> <button>Go Back Home</button></a>
+                <a href="">  <button>Contact Us</button></a>
+            </div>
+
+        </div>
+
+    </section>
+
+    <section class="section1">
+
+        <div class="textsection">
+            <h1 class="fancytext1" style="font-size: 68px; font-weight: bolder;">Step 1</h1>
+            <hr>
+            <p style="font-size: 22px; padding-top: 0.5rem;">First, Login the account from clicking the button
+                availabe above on above page. If you do not have an account create one by clicking register button on
+                the login page</p>
+        </div>
+
+        <div class="imagesection">
+            <img src="/static/images/account.png" alt="">
+        </div>
+
+    </section>
+
+
+
+    <section class="section2">
+
+        <div class="imagesection">
+            <img src="/static/images/url.png" alt="">
+        </div>
+
+        <div class="textsection">
+            <h1 class="fancytext2" style="font-size: 68px; font-weight: bolder;">Step 2</h1>
+            <hr>
+            <p style="font-size: 22px; padding-top: 0.5rem;">Once Logged in, Grab the URL of your werbsite
+                that you want to scan. Enter the URL in box and click on scan</p>
+        </div>
+    </section>
+
+    <section class="section3">
+
+        <div class="textsection">
+            <h1 class="fancytext3" style="font-size: 68px; font-weight: bolder;">Step 3</h1>
+            <hr>
+            <p style="font-size: 22px; padding-top: 0.5rem;">Wait for the scan to complete. Once completed the scan
+                result will be
+                visible to you. If your site contain malware then you will also see prevention details</p>
+        </div>
+
+        <div class="imagesection">
+            <img src="/static/images/scan.png" alt="">
+        </div>
+
+    </section>
+
+    <section class="section4">
+           <div class="subscribetext">
+            <h1>Drop Your Email For More Updates</h1>
+           </div>
+
+          <div>
+        <form >
+            <input id="input"  type="email" placeholder="Enter Your Email">
+            <button id="ginger">Subcribe</button>
+        </form>
+              </div>
+    </section>
+
+
+</body>
+
+<script>
+
+    var ginger = document.getElementById('ginger');
+
+    ginger.addEventListener('click', function(){
+
+        var input = document.getElementById('input').value;
+        if(input == ""){
+            alert('Please Enter Email');
+        }else{
+            alert('Thank You For Subscribing');
+        }
+
+    });
+   
+</script>
+</html>

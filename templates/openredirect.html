@@ -89,7 +89,7 @@
                         <a class="nav-link" href="#">Full Scan</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">About Us</a>
+                        <a class="nav-link" href="{{ url_for('userguide') }}">How It Works</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Contact Us</a>
@@ -106,7 +106,10 @@
         <form class="userprofile" action="/logout">
             <img src="{{ url_for('static', filename='/images/userlogo.png') }}" alt="">
             <h3>Hi, {{username}}</h3>
-            <button name="logout", type="submit">Logout</button>
+            <button  name="logout", type="submit">Logout</button>
+            <a style="text-decoration: none;" href="{{url_for('profile')}}"> <div class="new"  style="padding: 4.5px; margin-top: 6px;">Settings
+            </div>
+            </a>
         </form>
 
         <div id="loading">

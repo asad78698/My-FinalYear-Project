@@ -243,5 +243,10 @@ def tlsinput():
          return ' No Input Found', 404
 
 
+
+@app.route('/userguide')
+def userguide():
+    return render_template('usergenerated.html')
+
 if __name__ == "__main__":
      app.run(debug=True)
