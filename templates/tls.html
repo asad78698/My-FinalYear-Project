@@ -84,7 +84,7 @@
                         </div>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Full Scan</a>
+                        <a class="nav-link" href="{{url_for('fullscan')}}">Full Scan</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url_for('userguide') }}">How It Works</a>
@@ -92,12 +92,18 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#">Contact Us</a>
                     </li>
+                    {% if session.get('loggedin') %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{url_for('logout')}}">Logout</a>
+                    </li>
+                    {% else %}
                     <li class="nav-item">
                         <a class="nav-link" href="{{url_for('loginpage')}}">Login</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{url_for('signup')}}">Signup</a>
                     </li>
+                    {% endif %}
                 </ul>
             </div>
 
@@ -132,13 +138,17 @@
                 <p>No result_tls available</p>
                 {% endif %}
             </div>
-            <div id="prevent-card" class="card p-2" {% if not result1 %}style="display: none;" {% endif %}>
-                <h1 style="padding: 8px; text-align: center; color: red;">Prevent SQL Injection</h1>
-                <p> 1. Use proper parameterization and prepared statements (parameterized queries) to prevent SQL injection.</p>
-                <p> 2. Filter and sanitize user inputs to remove or escape any potentially harmful characters.</p>
-                <p> 3. Restrict direct access to the database and use least privilege principles to limit access rights.</p>
-                <p> 4. Regularly update and patch the database software to address any security vulnerabilities.</p>
-                <p> 5. Implement input validation to ensure that user inputs match the expected format and type.</p>
+            <div id="prevent-card" class="card p-2" {% if not result_tls %}style="display: none;" {% endif %}>
+                <h1 style="padding: 8px; text-align: center; color: green;">Prevention For TLS</h1>
+                {% if 'secure' in result_tls %}
+                <p> Your site is secure from TLS vulnerabilities</p>
+                {% else %}
+                <p> <strong>1.</strong> Regularly update and renew SSL/TLS certificates to maintain security.</p>
+                <p> <strong>2.</strong>  Use strong encryption algorithms and key lengths to secure data.</p>
+                <p> <strong>3.</strong> Implement HTTP Strict Transport Security (HSTS) to prevent downgrade attacks.</p>
+                <p> <strong>4.</strong> Use secure cipher suites and protocols to protect data in transit.</p>
+                <p> <strong>5.</strong> Monitor SSL/TLS configurations and vulnerabilities to prevent security risks.</p>
+                {% endif %}
             </div>
         </section>
     </section>

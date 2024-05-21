@@ -85,7 +85,7 @@
                         </div>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Full Scan</a>
+                        <a class="nav-link" href="{{url_for('fullscan')}}">Full Scan</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url_for('userguide') }}">How It Works</a>
@@ -93,12 +93,18 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#">Contact Us</a>
                     </li>
+                    {% if session.get('loggedin') %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{url_for('logout')}}">Logout</a>
+                    </li>
+                    {% else %}
                     <li class="nav-item">
                         <a class="nav-link" href="{{url_for('loginpage')}}">Login</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{url_for('signup')}}">Signup</a>
                     </li>
+                    {% endif %}
                 </ul>
             </div>
         </div>

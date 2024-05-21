@@ -9,6 +9,7 @@ from securitymisconfig import check_security_misconfiguration
 from tls import check_tls_security
 from pymongo import  MongoClient
 from datetime import datetime
+from fullscan import full_security_check
 
 client = MongoClient('localhost', 27017)
 db = client['fyp']
@@ -37,7 +38,7 @@ def loginpage():
             session['username'] = username
             session['password'] = password
         
-            return redirect(url_for('sql'))
+            return redirect(url_for('fullscan'))
         
         else:
            error = 'Account Does Not Exist'
@@ -247,6 +248,19 @@ def tlsinput():
 @app.route('/userguide')
 def userguide():
     return render_template('usergenerated.html')
+
+@app.route('/fullscan', methods=['GET', 'POST'])
+def fullscan():
+    if request.method == 'POST':
+        ip_address = request.remote_addr
+        date = datetime.now()
+        user_input = request.form.get('url')
+        if user_input:
+            userCollection.update_one({'username': session['username']}, {'$push': {'url': "Scanned For Full Security Check : " + user_input + " at " + str(date) + " from Ip Address : " + ip_address}})
+            fullscan_result = full_security_check(user_input)
+            return render_template('fullscan.html' ,user_input=user_input, date=date, username=session['username'], result_fullscan=True, result_sql=fullscan_result[0], result_securityMisconfig=fullscan_result[1], result_securityHeaders=fullscan_result[2], result_OpenRedirect=fullscan_result[3], result_crossSite=fullscan_result[4], result_api=fullscan_result[5])
+    return render_template('fullscan.html', result_fullscan=False, username=session['username'])
+
 
 if __name__ == "__main__":
      app.run(debug=True)

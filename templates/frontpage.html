@@ -24,7 +24,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mx-auto mb-2 mb-lg-0 navbar ">
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Full Scan</a>
+                        <a class="nav-link" href="{{url_for('fullscan')}}">Full Scan</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">How It Works</a>
@@ -56,7 +56,7 @@
             <h1 id="animated-text" class="text-font">Web Security Scanner</h1>
             <p class="heading-text">Scan Your Website To Find Malware and Protect The Website</p>
             {% if session.get('loggedin') %}
-            <a href="{{ url_for('sql') }}">
+            <a href="{{ url_for('fullscan') }}">
                 <button class="btn-scan">Scan Now</button>
             </a>
             {% else %}
