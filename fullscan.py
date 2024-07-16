@@ -3,6 +3,9 @@ from bs4 import BeautifulSoup as bs
 from urllib.parse import urljoin, urlparse
 import re
 import html
+import ssl
+import socket
+
 
 s = requests.Session()
 s.headers["User-Agent"] = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.106 Safari/537.36"
@@ -148,72 +151,112 @@ def is_open_redirect(url):
     
     return f"The URL is not vulnerable to open redirects. Original URL: {url}"
 
+import requests
+import re
+import html
+
 def check_url_for_xss(url):
+    try:
+        response = requests.get(url)
+        response.raise_for_status()  # Raise an error for bad responses
+
+        # Check headers for potential XSS
+        for header, value in response.headers.items():
+            if re.search(r'<script.*?>', value, re.IGNORECASE):
+                return f"Potential XSS in header '{header}': {url}"
+
+        # Check URL parameters for potential XSS
+        params = requests.utils.urlparse(url).query
+        decoded_params = html.unescape(params)
+        if re.search(r'<script.*?>', decoded_params, re.IGNORECASE):
+            return f"Potential XSS in decoded URL parameters: {decoded_params} in {url}"
+
+        # Check attribute values in the HTML content for potential XSS
+        attribute_values = re.findall(r'\w+="(.*?)"', response.text)
+        for value in attribute_values:
+            decoded_value = html.unescape(value)
+            if re.search(r'<script.*?>', decoded_value, re.IGNORECASE):
+                return f"Potential XSS in decoded HTML attribute value: {decoded_value} in {url}"
+
+        # Check inline script tags in the HTML content
+        script_tags = re.findall(r'<script(.*?)>(.*?)</script>', response.text, re.IGNORECASE | re.DOTALL)
+        for script_tag in script_tags:
+            if re.search(r'<script.*?>', script_tag[1], re.IGNORECASE):
+                return f"Potential XSS in inline script tag: {script_tag[1]} in {url}"
+
+        # Check for potential XSS using additional XSS payloads
+        additional_xss_payloads = [
+            '<script>alert(1)</script>',
+            '<IMG SRC="javascript:alert(\'XSS\');">',
+            '<BODY ONLOAD=alert(\'XSS\')>',
+            '"><script>alert(\'XSS\')</script>'
+        ]
+        for payload in additional_xss_payloads:
+            if payload.lower() in response.text.lower():  # Case insensitive check
+                return f"Potential XSS detected with common payload: {payload} in {url}"
+
+        return f"The URL is not vulnerable to Cross-Site Scripting (XSS) attacks: {url}"
+
+    except requests.exceptions.RequestException as e:
+        return f"Error occurred: {e}"
+
+def crosssitescripting_result(url):
+    return check_url_for_xss(url)
+
+
+def extract_endpoints(url, limit=4):
     response = requests.get(url)
+    soup = bs(response.content, 'html.parser')
 
-    for header, value in response.headers.items():
-        if re.search(r'<script.*?>', value, re.IGNORECASE):
-            return f"Potential XSS in header '{header}': {url}"
-
-    params = requests.utils.urlparse(url).query
-    decoded_params = html.unescape(params)
-    if re.search(r'<script.*?>', decoded_params, re.IGNORECASE):
-        return f"Potential XSS in decoded URL parameters: {decoded_params} in {url}"
-
-    attribute_values = re.findall(r'\w+="(.*?)"', response.text)
-    for value in attribute_values:
-        decoded_value = html.unescape(value)
-        if re.search(r'<script.*?>', decoded_value, re.IGNORECASE):
-            return f"Potential XSS in decoded HTML attribute value: {decoded_value} in {url}"
-
-    return f"The URL is not vulnerable to Cross-Site Scripting (XSS) attacks: {url}"
-
-def extract_endpoints(url):
-    response = requests.get(url)
-    soup = bs(response.text, 'html.parser')
+    # Find all URLs in the website's HTML
     urls = [a['href'] for a in soup.find_all('a', href=True)]
-    pattern = r'(https?://[\w.-]+/\w+)'
+
+    # Extract API endpoints using a more comprehensive pattern
+    pattern = r'https?://(?:[-\w.]|(?:%[\da-fA-F]{2}))+'
     api_endpoints = [url for url in urls if re.match(pattern, url)]
+
+    # Limit the number of URLs to show
+    api_endpoints = api_endpoints[:limit]
+
     return api_endpoints
 
 def is_secure(endpoint):
+    # Check if the endpoint uses HTTPS
     return endpoint.startswith('https://')
 
-def find_secure_and_insecure_endpoints(endpoints):
-    insecure_endpoints = []
-    secure_endpoints = []
-    for endpoint in endpoints:
-        if not is_secure(endpoint):
-            insecure_endpoints.append(endpoint)
-        else:
-            secure_endpoints.append(endpoint)
-    return secure_endpoints, insecure_endpoints
+def analyze_endpoints(website_url, limit=4):
+    endpoints = extract_endpoints(website_url, limit=limit)
 
-def get_insecure_endpoints_message(insecure_endpoints):
-    message = "Insecure API endpoints:\n"
-    for endpoint in insecure_endpoints:
-        message += f"- {endpoint}\n"
-        message += "Solution: Consider using HTTPS to secure the endpoint.\n"
-    return message
-
-def get_secure_endpoints_message(secure_endpoints):
-    message = "Secure API endpoints:\n"
-    for endpoint in secure_endpoints:
-        message += f"- {endpoint}\n"
-    return message
-
-def analyze_endpoints(website_url):
-    endpoints = extract_endpoints(website_url)
     if not endpoints:
-        return f"No API endpoints found on the website {website_url}."
+        return f"No API endpoints found on the website {website_url}"
+
+    all_secure = all(is_secure(endpoint) for endpoint in endpoints)
+
+    if all_secure:
+        return "All API endpoints on this website are secure."
     else:
-        secure, insecure = find_secure_and_insecure_endpoints(endpoints)
-        secure_message = get_secure_endpoints_message(secure)
-        insecure_message = get_insecure_endpoints_message(insecure)
-        return f"All API endpoints found on the website Are Secure {website_url}"
+        return "API endpoints are not secure on this website."
+
     
 
-# if required to show api list aka secure api then i will replace these vairables \n{secure_message}\n{insecure_message}
+
+def check_tls_security(url):
+    try:
+        hostname = url.split('//')[-1].split('/')[0]
+        context = ssl.create_default_context()
+        with socket.create_connection((hostname, 443)) as sock:
+            with context.wrap_socket(sock, server_hostname=hostname) as ssock:
+                cipher = ssock.cipher()
+                if cipher:
+                    protocol = ssock.version()
+                    key_exchange = ssock.shared_ciphers()
+                    return f"The {url} is using a secure connection. \t Protocol: {protocol}, \n \n  Cipher Name: {cipher[0]}, Cipher Version: {cipher[1]}, Cipher Bits: {cipher[2]}, Key Exchange: {key_exchange}"
+                else:
+                    return "The website is not using a secure cipher."
+
+    except (ssl.SSLError, socket.error) as e:
+        return f"An error occurred: {str(e)}"
+
 
 def full_security_check(url):
     results = []
@@ -223,4 +266,5 @@ def full_security_check(url):
     results.append(is_open_redirect(url))
     results.append(check_url_for_xss(url))
     results.append(analyze_endpoints(url))
+    results.append(check_tls_security(url))
     return results

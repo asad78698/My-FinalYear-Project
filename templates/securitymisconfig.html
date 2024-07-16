@@ -143,26 +143,24 @@
                 {% endif %}
             </div>
 
-           <!--  <div id="prevent-card" class="card p-2" {% if not result1 %}style="display: none;" {% endif %}>
-               
-                <h1 style="padding: 8px; text-align: center; color: red;">Prevent SQL Injection</h1>
-              
-                <p> 1. Use proper parameterization and prepared statements (parameterized queries) to prevent SQL injection.</p>
-                <p>
-                    2. Filter and sanitize user inputs to remove or escape any potentially harmful characters.
-                </p>
-                <p>
-                    3. Restrict direct access to the database and use least privilege principles to limit access rights.
-                </p>
+            
+            {% if 'Sensitive' in  result_securitymisconfig %}
+            <div id="prevent-card" class="card p-2" {% if not result_securitymisconfig %}style="display: none;" {% endif %}>
 
-                <p>
-                    4. Regularly update and patch the database software to address any security vulnerabilities.
-                </p>
-
-                <p>
-                    5. Implement input validation to ensure that user inputs match the expected format and type.
-                </p>
-            </div> -->
+                <h1 style="padding: 8px; text-align: center; color: red;">Prevention Required</h1>
+            
+                <p>1. <strong>Hide or Modify 'Server' Header:</strong></p>
+                <p>For Apache: Add <code>ServerTokens Prod</code> and <code>ServerSignature Off</code> to your configuration.</p>
+                <p>For Nginx: Use <code>server_tokens off;</code>.</p>
+                <p>Use a reverse proxy or a load balancer to remove or modify headers before they reach the client.</p>
+            
+                <p>2. <strong>Remove 'X-Powered-By' Header:</strong></p>
+                <p>For Express.js (Node.js framework): Add <code>app.disable('x-powered-by');</code> in your app configuration.</p>
+                <p>For PHP: Set <code>expose_php = Off</code> in your <code>php.ini</code> file.</p>
+                <p>For Apache: Add <code>Header unset X-Powered-By</code> to your configuration.</p>
+                <p>For Nginx: Use <code>more_clear_headers 'X-Powered-By';</code> (requires the HttpHeadersMore module).</p>
+            </div>            
+            {% endif %}     
         </section>
     </section>
 

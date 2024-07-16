@@ -18,6 +18,3 @@ def check_tls_security(url):
     except (ssl.SSLError, socket.error) as e:
         return f"An error occurred: {str(e)}"
 
-url_to_check = 'https://www.google.com/'
-result = check_tls_security(url_to_check)
-print(result)

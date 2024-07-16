@@ -135,27 +135,17 @@
                 <p>No result_crosssite available</p>
                 {% endif %}
             </div>
-
-           <!--  <div id="prevent-card" class="card p-2" {% if not result1 %}style="display: none;" {% endif %}>
-               
-                <h1 style="padding: 8px; text-align: center; color: red;">Prevent SQL Injection</h1>
-              
-                <p> 1. Use proper parameterization and prepared statements (parameterized queries) to prevent SQL injection.</p>
-                <p>
-                    2. Filter and sanitize user inputs to remove or escape any potentially harmful characters.
-                </p>
-                <p>
-                    3. Restrict direct access to the database and use least privilege principles to limit access rights.
-                </p>
-
-                <p>
-                    4. Regularly update and patch the database software to address any security vulnerabilities.
-                </p>
-
-                <p>
-                    5. Implement input validation to ensure that user inputs match the expected format and type.
-                </p>
-            </div> -->
+                 
+            {% if 'Potential' in result_crosssite %}
+            <div id="prevent-card" class="card p-2" {% if not result_crosssite %}style="display: none;" {% endif %}>
+                <h1 style="padding: 8px; text-align: center; color: green;">Prevent Cross-Site Scripting (XSS)</h1>
+                <p>1. Encode output: Always encode user-generated content and dynamically generated HTML output using proper encoding techniques such as HTML escaping (e.g., `htmlspecialchars` in PHP, `escape` in JavaScript).</p>
+                <p>2. Validate and sanitize input: Implement strict input validation and sanitize user inputs by filtering out or neutralizing scripts and other potentially dangerous content.</p>
+                <p>3. Use HTTPOnly and Secure flags for cookies: Ensure that session cookies are set with the HTTPOnly and Secure flags to prevent them from being accessed via JavaScript and to restrict transmission to secure HTTPS connections.</p>
+                <p>4. Implement Content Security Policy (CSP): Define and enforce a Content Security Policy (CSP) that specifies which resources (scripts, styles, etc.) can be loaded by your web application, reducing the risk of XSS attacks.</p>
+                <p>5. Educate developers: Provide ongoing training and awareness programs to educate developers about XSS vulnerabilities, secure coding practices, and how to effectively mitigate risks.</p>
+            </div>
+             {% endif %}
         </section>
     </section>
 

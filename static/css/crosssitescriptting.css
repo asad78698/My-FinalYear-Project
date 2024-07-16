@@ -10,11 +10,12 @@ html{
 }
 
 body{
-    height: 100vh;
+    width: 100%;
+    height: 150vh;
     background-image: url('/static/images/hero.jpg');
     background-position: center;
-    background-size: 300vh;
-    background-repeat: no-repeat;
+    background-size: cover;
+    background-repeat: repeat;
 
 }
 

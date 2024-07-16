@@ -138,27 +138,18 @@
                 <p>No result available</p>
                 {% endif %}
             </div>
-
-           <!--  <div id="prevent-card" class="card p-2" {% if not result1 %}style="display: none;" {% endif %}>
-               
-                <h1 style="padding: 8px; text-align: center; color: red;">Prevent SQL Injection</h1>
+              {% if 'not' in resultapi %}
+            <div id="prevent-card" class="card p-2" {% if not resultapi %}style="display: none;" {% endif %}>
+                <h1 style="padding: 8px; text-align: center; color: red;">Secure API Endpoints</h1>
               
-                <p> 1. Use proper parameterization and prepared statements (parameterized queries) to prevent SQL injection.</p>
-                <p>
-                    2. Filter and sanitize user inputs to remove or escape any potentially harmful characters.
-                </p>
-                <p>
-                    3. Restrict direct access to the database and use least privilege principles to limit access rights.
-                </p>
-
-                <p>
-                    4. Regularly update and patch the database software to address any security vulnerabilities.
-                </p>
-
-                <p>
-                    5. Implement input validation to ensure that user inputs match the expected format and type.
-                </p>
-            </div> -->
+                <p>1. Authentication and Authorization: Implement robust authentication mechanisms (like OAuth) and enforce proper authorization to control access to API resources.</p>
+                <p>2. Input Validation: Validate and sanitize all input parameters and payloads received by API endpoints to prevent injection attacks and ensure data integrity.</p>
+                <p>3. Use HTTPS: Encrypt data transmitted between clients and servers using HTTPS to prevent eavesdropping and man-in-the-middle attacks.</p>
+                <p>4. Rate Limiting and Throttling: Implement rate limiting and throttling mechanisms to protect against abuse, denial-of-service (DoS), and brute-force attacks.</p>
+                <p>5. Logging and Monitoring: Enable logging and monitoring of API activities to detect suspicious behavior and security incidents in real-time.</p>
+            </div>
+            {% endif %}
+            
         </section>
     </section>
 

@@ -27,10 +27,7 @@
                         <a class="nav-link" href="{{url_for('fullscan')}}">Full Scan</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">How It Works</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Contact Us</a>
+                        <a class="nav-link" href="{{url_for('userguide')}}">How It Works</a>
                     </li>
                     {% if session.get('loggedin') %}
                     <li class="nav-item">

@@ -146,6 +146,8 @@
                     <p><strong>Cross Site Scripting Result:</strong> {{result_crossSite}}</p>
                     <hr>
                     <p><strong>API Endpoints Result:</strong> {{result_api}}</p>
+                    <hr>
+                    <p><strong>TLS Result:</strong> {{result_tls}}</p>
                 </div>
             </div>
             {% else %}
@@ -162,13 +164,21 @@
                         {% if 'No' in result_sql %}
                     <p>No Recommendation Required 😊👍</p>
                     {% else %}
-                    <p>Recommendation: Implement parameterized queries and input validation/sanitization. 😊👍</p>
+                    <p>Recommendation: Implement parameterized queries and input validation/sanitization.</p>
+                    <p>Filter and sanitize user inputs to remove or escape any potentially harmful characters.</p>
+                    <p>Restrict direct access to the database and use least privilege principles to limit access rights.
+                    </p>
+                    <p>5. Implement input validation to ensure that user inputs match the expected format and type.</p>
                     {% endif %}
                     </p>
                     <hr>
                     <p><strong>Security Misconfiguration Prevention:</strong>
                         {% if 'Potential' in result_securityMisconfig %}
-                    <p>Recommendation: Ensure that the application is not vulnerable to security misconfiguration.</p>
+                    <p>For Apache: Add <code>ServerTokens Prod</code> and <code>ServerSignature Off</code> to your
+                        configuration.</p>
+                    <p>For Nginx: Use <code>server_tokens off;</code>.</p>
+                    <p>Use a reverse proxy or a load balancer to remove or modify headers before they reach the client.
+                    </p>
                     {% else %}
                     <p>No Recommendation Required 😊👍</p>
                     {% endif %}
@@ -176,11 +186,14 @@
                     <hr>
                     <p><strong>Security Headers Prevention:</strong>
                         {% if 'does not' in result_securityHeaders %}
-                    <p>Recommendation: Ensure that the application is not vulnerable to security Headers.</p>
-
+                    <p>Implement the <strong>Strict-Transport-Security (HSTS)</strong> header to enforce secure
+                        (HTTPS) connections to the server.</p>
+                    <p>Add a <strong>Content-Security-Policy (CSP)</strong> header to mitigate cross-site scripting
+                        (XSS) and other content injection attacks.</p>
+                    <p>Regularly review and update your security headers to ensure they meet current security
+                        standards and best practices.</p>
                     {% else %}
                     <p>No Recommendation Required 😊👍</p>
-
                     {% endif %}
                     </p>
                     <hr>
@@ -188,24 +201,45 @@
                         {% if 'not vulnerable' in result_OpenRedirect %}
                     <p>No Recommendation Required 😊👍</p>
                     {% else %}
-                    <p>Recommendation: Ensure that the application is not vulnerable to Open Redirects.</p>
+                    <p>Always validate and sanitize input URLs to ensure they point to trusted and expected
+                        destinations.</p>
+                    <p>Implement a whitelist of trusted domains or use regular expressions to validate and restrict
+                        the format of redirect URLs.</p>
+                    <p>Avoid using user-provided input directly in the redirection process without proper validation
+                        and sanitization.</p>
                     {% endif %}
                     </p>
                     <hr>
                     <p><strong>Cross Site Prevention:</strong>
-                        {% if 'not vulnerable' in result_crossSite %}
-                    <p>No Recommendation Required 😊👍</p>
+                        {% if 'Potential' in result_crossSite %}
+                          
+                            <p>Encode output: Always encode user-generated content and dynamically generated HTML output using proper encoding techniques such as HTML escaping (e.g., `htmlspecialchars` in PHP, `escape` in JavaScript).</p>
+                            <p>Validate and sanitize input: Implement strict input validation and sanitize user inputs by filtering out or neutralizing scripts and other potentially dangerous content.</p>
+                            <p>Use HTTPOnly and Secure flags for cookies: Ensure that session cookies are set with the HTTPOnly and Secure flags to prevent them from being accessed via JavaScript and to restrict transmission to secure HTTPS connections.</p>
+                            <p>Implement Content Security Policy (CSP): Define and enforce a policy to control what resources can be loaded on your website.</p>
+                            <p>Educate developers: Promote awareness and training on secure coding practices to recognize and mitigate XSS vulnerabilities.</p>
                     {% else %}
-                    <p>Recommendation: Ensure that the application is not vulnerable to Cross Site.</p>
-                    {% endif %}
-                    </p>
+                        <p>No Recommendation Required 😊👍</p>
+                    {% endif %}                    
                     <hr>
                     <p><strong>API Endpoints Prevention:</strong>
-                        {% if 'Secure' in result_api %}
+                        {% if 'secure' in result_api %}
                     <p>No Recommendation Required 😊👍</p>
                     {% else %}
-                    <p>Recommendation: Ensure that the application is not vulnerable to Api Endpoints.</p>
-                    {% endif %}
+                    <p>Authentication and Authorization: Implement robust authentication mechanisms (like OAuth) and
+                        enforce proper authorization to control access to API resources.</p>
+                    <p>Input Validation: Validate and sanitize all input parameters and payloads received by API
+
+                        {% endif %}
+                    </p>
+                    <hr>
+                    <p><strong>TLS Prevention:</strong>
+                        {% if 'secure' in result_tls %}
+                    <p>No Recommendation Required 😊👍</p>
+                    {% else %}
+                    <p> Regularly update and renew SSL/TLS certificates to maintain security.</p>
+                    <p> Use strong encryption algorithms and key lengths to secure data.</p>
+                    <p> Implement HTTP Strict Transport Security (HSTS) to prevent downgrade attacks.</p> {% endif %}
                     </p>
                 </div>
             </div>

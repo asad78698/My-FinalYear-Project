@@ -258,7 +258,7 @@ def fullscan():
         if user_input:
             userCollection.update_one({'username': session['username']}, {'$push': {'url': "Scanned For Full Security Check : " + user_input + " at " + str(date) + " from Ip Address : " + ip_address}})
             fullscan_result = full_security_check(user_input)
-            return render_template('fullscan.html' ,user_input=user_input, date=date, username=session['username'], result_fullscan=True, result_sql=fullscan_result[0], result_securityMisconfig=fullscan_result[1], result_securityHeaders=fullscan_result[2], result_OpenRedirect=fullscan_result[3], result_crossSite=fullscan_result[4], result_api=fullscan_result[5])
+            return render_template('fullscan.html' ,user_input=user_input, date=date, username=session['username'], result_fullscan=True, result_sql=fullscan_result[0], result_securityMisconfig=fullscan_result[1], result_securityHeaders=fullscan_result[2], result_OpenRedirect=fullscan_result[3], result_crossSite=fullscan_result[4], result_api=fullscan_result[5], result_tls=fullscan_result[6])
     return render_template('fullscan.html', result_fullscan=False, username=session['username'])
 
 

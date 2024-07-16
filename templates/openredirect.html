@@ -140,28 +140,16 @@
                 <p>No resultopenredirect available</p>
                 {% endif %}
             </div>
-            
-
-           <!--  <div id="prevent-card" class="card p-2" {% if not result1 %}style="display: none;" {% endif %}>
-               
-                <h1 style="padding: 8px; text-align: center; color: red;">Prevent SQL Injection</h1>
-              
-                <p> 1. Use proper parameterization and prepared statements (parameterized queries) to prevent SQL injection.</p>
-                <p>
-                    2. Filter and sanitize user inputs to remove or escape any potentially harmful characters.
-                </p>
-                <p>
-                    3. Restrict direct access to the database and use least privilege principles to limit access rights.
-                </p>
-
-                <p>
-                    4. Regularly update and patch the database software to address any security vulnerabilities.
-                </p>
-
-                <p>
-                    5. Implement input validation to ensure that user inputs match the expected format and type.
-                </p>
-            </div> -->
+            {% if 'is vulnerable' in resultopenredirect %}
+            <div id="prevent-card" class="card p-2" {% if not resultopenredirect %}style="display: none;" {% endif %}>
+                <h1 style="padding: 8px; text-align: center; color: red;">Prevent Open Redirects</h1>
+                <p>1. Always validate and sanitize input URLs to ensure they point to trusted and expected destinations.</p>
+                <p>2. Implement a whitelist of trusted domains or use regular expressions to validate and restrict the format of redirect URLs.</p>
+                <p>3. Avoid using user-provided input directly in the redirection process without proper validation and sanitization.</p>
+                <p>4. Use framework-specific or language-specific libraries that provide built-in protection against open redirects.</p>
+                <p>5. Educate developers about the risks of open redirects and incorporate secure coding practices into development processes.</p>
+            </div>
+            {% endif %}                      
         </section>
     </section>
 
